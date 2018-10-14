@@ -59,7 +59,7 @@ class App extends Component {
     let infowindow = new google.maps.InfoWindow()
 
     // Create dynamic animated markers and InfoWindow   
-    this.state.venues.map(myVenues => {
+    let allMarkers = this.state.venues.map(myVenues => {
 
       let contentString = 
       `<center> 
@@ -95,14 +95,16 @@ class App extends Component {
         // open InfoWindow 
         infowindow.open(map, marker);
       })
-
+      return marker;
     });
+    this.setState({ allMarkers });
   }
 
   render() {
     return (
       <main>
         <div id="map">
+          
         </div>
       </main>  
     );
