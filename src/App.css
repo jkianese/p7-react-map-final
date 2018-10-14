@@ -5,12 +5,12 @@
   display: flex;
   flex-flow: nowrap;
 }
-
+/*
 .sidebar {
   background-color: aqua;
   width: 25%;
 }
-
+*/
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 40vmin;
@@ -40,14 +40,47 @@
   }
 }
 
-#map {
-  margin: 0;
-  height: 100vh;
-  width: 75vw;
-}
 /* Optional: Makes the sample page fill the window. */
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+}
+#map {
+  /*margin: 0;*/
+  height: 100vh;
+  width: 100%;
+  order: 1;
+}
+/* Code Below -- Borrowed */
+.container {
+  display: flex;
+}
+
+.sidebar {
+  background-color: aqua;
+  width: 300px;
+}
+
+.venue-list-parent {
+  list-style-type: none;
+  padding: 10px;
+  margin: 15px;
+}
+
+.venue-list-item {
+  padding: 20px 0;
+  cursor: pointer;
+  width: 100%;
+}
+
+.venue-list-item:hover {
+  color: red;
+  background-color: white;
+}
+
+.search-input {
+  margin: 10px 0 0 0;
+  width: 88%;
+  padding: 10px;
 }
