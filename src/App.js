@@ -6,8 +6,8 @@ import axios from 'axios'
 class App extends Component {
   
   state = {
-        venues: [],
-        markers: [],
+        myVenues: [],
+        allMarkers: [],
         query: '',
         infowindow: []
   }  
@@ -19,19 +19,19 @@ class App extends Component {
   updateQuery = query => {
     this.setState({ query });
       if(query.trim() === ""){
-    this.state.markers.forEach(marker => marker.setVisible(true)) // markers might have to be allMarkers
+    this.state.allMarkers.forEach(marker => marker.setVisible(true)) 
     return true;
       } else {
-      let venues = this.state.venues.filter(venue => {
+      let myVenues = this.state.myVenues.filter(venue => {
           return venue.venue.name.toLowerCase().indexOf(query.toLowerCase()) > -1
       })
-      venues
-        .forEach(item => this.state.markers
+      myVenues
+        .forEach(item => this.state.allMarkers
         .filter(marker => marker.id !== item.venue.name)
         .map(falseMarker => falseMarker
-        .setVisible(false)))
-      venues
-        .forEach(item => this.state.markers
+        .setVisible(true)))
+      myVenues
+        .forEach(item => this.state.allMarkers
         .filter(marker => marker.id === item.venue.name)
         .map(trueMarker => trueMarker
         .setVisible(true)))
@@ -60,7 +60,7 @@ class App extends Component {
       .get(endPoint + new URLSearchParams(parameters)) 
       .then(response => {
         this.setState({
-          venues: response.data.response.groups[0].items
+          myVenues: response.data.response.groups[0].items
         }, this.getSource())
       })
       .catch(error => {
@@ -69,18 +69,14 @@ class App extends Component {
   }
   
   showMarkerBox = (marker, contentString) => {
-
-    // var infowindow = new window.google.maps.InfoWindow();
-
-    this.state.infowindow.setContent(contentString);
-    
+    this.state.infowindow.setContent(contentString);  
     this.state.infowindow.open(this.state.map, marker);
-    /*
+  
     marker.setAnimation(window.google.maps.Animation.BOUNCE);
     setTimeout(function() {
       marker.setAnimation(null);
     }, 2000);
-    */
+    
   }
   
   // render map using Google Maps JavaScript API
@@ -98,22 +94,22 @@ class App extends Component {
       this.setState({ map, infowindow })
 
     // Create dynamic animated markers and InfoWindow   
-    let markers = this.state.venues.map(myVenues => {
+    let allMarkers = this.state.myVenues.map(venueInfo => {
 
-      let contentString = `${myVenues.venue.name}` 
+      let contentString = `${venueInfo.venue.name}` 
       /*`<center> 
-      ${myVenues.venue.name}<br> 
-      ${myVenues.venue.location.address}<br> 
-      ${myVenues.venue.location.city}<br>
-      ${myVenues.venue.location.state}<br>
-      ${myVenues.venue.location.postalCode}<br> 
+      ${venueInfo.venue.name}<br> 
+      ${venueInfo.venue.location.address}<br> 
+      ${venueInfo.venue.location.city}<br>
+      ${venueInfo.venue.location.state}<br>
+      ${venueInfo.venue.location.postalCode}<br> 
       </center>`;
       */
       let marker = new google.maps.Marker({
-        position: { lat: myVenues.venue.location.lat, lng: myVenues.venue.location.lng },
+        position: { lat: venueInfo.venue.location.lat, lng: venueInfo.venue.location.lng },
         map: map,
-        id: myVenues.venue.id,
-        title: myVenues.venue.name,
+        id: venueInfo.venue.id,
+        title: venueInfo.venue.name,
         animation: google.maps.Animation.DROP
       });
 
@@ -139,7 +135,7 @@ class App extends Component {
       })
       return marker;
     });
-    this.setState({ markers });
+    this.setState({ allMarkers });
   }
 
   render() {
@@ -147,9 +143,9 @@ class App extends Component {
       <main className="container">
         <div id="map" /> 
           <Locations 
-            venues={this.state.venues}
+            myVenues={this.state.myVenues}
             query={this.state.query}
-            markers={this.state.markers}
+            allMarkers={this.state.allMarkers}
             updateQuery={this.updateQuery}
             showMarkerBox={this.showMarkerBox} 
           />
