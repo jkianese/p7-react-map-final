@@ -61,21 +61,34 @@ class App extends Component {
     // Create dynamic animated markers and InfoWindow   
     this.state.venues.map(myVenues => {
 
-      let contentString = `${myVenues.venue.name}`
+      let contentString = 
+      `<center> 
+      ${myVenues.venue.name}<br> 
+      ${myVenues.venue.location.address}<br> 
+      ${myVenues.venue.location.city}<br>
+      ${myVenues.venue.location.state}<br>
+      ${myVenues.venue.location.postalCode}<br> 
+      </center>`
 
       let marker = new google.maps.Marker({
         position: { lat: myVenues.venue.location.lat, lng: myVenues.venue.location.lng },
         map: map,
-        Title: myVenues.venue.name,
+        title: myVenues.venue.name,
         animation: google.maps.Animation.DROP
       });
 
       // clickable markers
       marker.addListener('click', function() {
-        marker
-          .setAnimation(window.google.maps.Animation.BOUNCE);
-          setTimeout(function(){ marker.setAnimation(null); }, 2000);
         
+        // Animate The Marker
+        if (marker.getAnimation() !== null) {
+          marker.setAnimation(null);
+        } else {
+          marker.setAnimation(google.maps.Animation.BOUNCE);
+          setTimeout(function() {
+            marker.setAnimation(null);
+          }, 2000);
+        }
         // change content
         infowindow.setContent(contentString)
         
@@ -84,7 +97,6 @@ class App extends Component {
       })
 
     });
-
   }
 
   render() {
