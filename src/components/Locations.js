@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-// import "./style.css";
 
-class List extends Component {
+class Locations extends Component {
   state = {};
 
   handleClick = (id, title) => {
@@ -29,10 +28,10 @@ class List extends Component {
             .toLowerCase()
             .indexOf(this.props.query.toLowerCase()) > -1
             )
-            .map((item, idx) => {
+            .map((item, index) => {
               return (
-                <li tabIndex="0" className="venue-list-item" key={idx} onClick={()=> 
-                    this.handleClick(idx,item.venue.name)}>
+                <li tabIndex="0" className="venue-list-item" key={index} onClick={()=> 
+                    this.handleClick(index, item.venue.name)}>
                     {item.venue.name}
                 </li>
               );
@@ -42,4 +41,4 @@ class List extends Component {
     );
   }
 }
-export default List;
+export default Locations;
