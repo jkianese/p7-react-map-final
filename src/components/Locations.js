@@ -1,38 +1,37 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 class Locations extends Component {
-  state = {};
-
-  handleClick = (id, title) => {
-    this.props.showMarkerBox(this.props.allMarkers[id], title)
-}
-
+    
+  onClickLocation = (id, title) => {
+    this.props.sidebarList(this.props.allMarkers[id], title)
+  } 
+  
   render() {
    
     const { myVenues } = this.props;
     
     return (
-      <div className="sidebar"> 
-        <input
+      <div className="sidebar-boxes"> 
+        <input className="text-input"
           aria-label="search field"
           type="text"
-          placeholder="Search Venues"
+          placeholder="Search Places"
           value={this.props.query}
           onChange={e => this.props.updateQuery(e.target.value)}
           
         />
-        <ul className="venue-list-parent">
+        <ul className="locations-list">
           {myVenues
             .filter(filtered =>
                 filtered.venue.name
             .toLowerCase()
             .indexOf(this.props.query.toLowerCase()) > -1
             )
-            .map((item, index) => {
+            .map((item, idx) => {
               return (
-                <li tabIndex="0" className="venue-list-item" key={index} onClick={()=> 
-                    this.handleClick(index, item.venue.name)}>
-                    {item.venue.name}
+                <li tabIndex="0" className="locations-names" key={idx} onClick={()=> 
+                    this.onClickLocation(idx, item.venue.name)}>
+                      {item.venue.name}
                 </li>
               );
             })}

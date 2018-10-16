@@ -9,34 +9,12 @@ class App extends Component {
         myVenues: [],
         allMarkers: [],
         query: '',
-        infowindow: []
+        infowindow: [],
   }  
 
   componentDidMount() {
     this.getVenues()
   }
-
-  updateQuery = query => {
-    this.setState({ query });
-      if(query.trim() === ""){
-    this.state.allMarkers.forEach(marker => marker.setVisible(true)) 
-    return true;
-      } else {
-      let myVenues = this.state.myVenues.filter(venue => {
-          return venue.venue.name.toLowerCase().indexOf(query.toLowerCase()) > -1
-      })
-      myVenues
-        .forEach(item => this.state.allMarkers
-        .filter(marker => marker.id !== item.venue.name)
-        .map(falseMarker => falseMarker
-        .setVisible(true)))
-      myVenues
-        .forEach(item => this.state.allMarkers
-        .filter(marker => marker.id === item.venue.name)
-        .map(trueMarker => trueMarker
-        .setVisible(true)))
-    }
-  }; 
 
   // get Google Maps API Key
   getSource = () => {
@@ -68,7 +46,8 @@ class App extends Component {
       });
   }
   
-  showMarkerBox = (marker, contentString) => {
+  sidebarList = (marker, contentString) => {
+
     this.state.infowindow.setContent(contentString);  
     this.state.infowindow.open(this.state.map, marker);
   
@@ -95,16 +74,16 @@ class App extends Component {
 
     // Create dynamic animated markers and InfoWindow   
     let allMarkers = this.state.myVenues.map(venueInfo => {
-
-      let contentString = `${venueInfo.venue.name}` 
-      /*`<center> 
+      
+      let contentString =  
+      `<center> 
       ${venueInfo.venue.name}<br> 
       ${venueInfo.venue.location.address}<br> 
       ${venueInfo.venue.location.city}<br>
       ${venueInfo.venue.location.state}<br>
       ${venueInfo.venue.location.postalCode}<br> 
       </center>`;
-      */
+      
       let marker = new google.maps.Marker({
         position: { lat: venueInfo.venue.location.lat, lng: venueInfo.venue.location.lng },
         map: map,
@@ -116,17 +95,15 @@ class App extends Component {
       // clickable markers
       marker.addListener('click', () => {
         
-        this.showMarkerBox(marker, contentString);
-
-        // Animate The Marker
-        if (marker.getAnimation() !== null) {
-          marker.setAnimation(null);
-        } else {
+        this.sidebarList(marker, contentString);      
+        
+        // Animate The Marker on click
           marker.setAnimation(google.maps.Animation.BOUNCE);
-          setTimeout(function() {
+            setTimeout(function() {
             marker.setAnimation(null);
           }, 2000);
-        }
+        
+      
         // change content
         infowindow.setContent(contentString)
         
@@ -138,6 +115,31 @@ class App extends Component {
     this.setState({ allMarkers });
   }
 
+  updateQuery = query => {
+    this.setState({ query });
+      if(query.trim() === ""){
+    this.state.allMarkers.forEach(marker => marker.setVisible(true)) 
+    return true;
+      } else {
+      
+      let myVenues = this.state.myVenues.filter(venue => {
+          return venue.venue.name.toLowerCase().indexOf(query.toLowerCase()) > -1
+      })
+      
+      myVenues
+        .forEach(item => this.state.allMarkers
+        .filter(marker => marker.id !== item.venue.name)
+        .map(falseMarker => falseMarker
+        .setVisible(false)))
+      myVenues
+        .forEach(item => this.state.allMarkers
+        .filter(marker => marker.id === item.venue.name) 
+        .map(trueMarker => trueMarker
+        .setVisible(true)))
+      }
+      
+  }; 
+
   render() {
     return (
       <main className="container">
@@ -147,7 +149,7 @@ class App extends Component {
             query={this.state.query}
             allMarkers={this.state.allMarkers}
             updateQuery={this.updateQuery}
-            showMarkerBox={this.showMarkerBox} 
+            sidebarList={this.sidebarList} 
           />
       </main>  
     );

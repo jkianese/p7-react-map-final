@@ -52,24 +52,19 @@ html, body {
   width: 100%;
   order: 1;
 }
-/* Code Below -- Borrowed */
+
 .container {
   display: flex;
   text-align: center;
 }
 
-.sidebar {
-  background-color: white;
-  width: 300px;
-}
-
-.venue-list-parent {
+.locations-list {
   list-style-type: none;
   padding: 5px;
   margin: 15px;
 }
 
-.venue-list-item {
+.locations-names {
   padding: 20px 0;
   cursor: pointer;
   width: 100%;
@@ -83,16 +78,34 @@ html, body {
   scroll-behavior: auto
 }
 
-.venue-list-item:hover {
+.locations-names:hover {
   color:white;
   background-color: blue;
 }
 
-.search-input {
-  height: 2rem;
+.sidebar-boxes {
+  background-color: white;
+  width: 300px;
+  text-align: center;
+}
+
+.text-input {
+  width: 75%;
+  line-height: 2rem;
+  border: 3px solid grey;
+  font-size: 13px;
+  color: black;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+/*
+.text-input {
+  height: 1rem;
   font-size: 1rem;
   margin: 10px 0 0 0;
   width: 100vw;
-  padding: 10px;
+  padding: 100px;
   text-align: center;
 }
+*/
