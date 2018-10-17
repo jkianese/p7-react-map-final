@@ -1,6 +1,6 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).<br><br>
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).<br>
 
-This is a project I completed for Udacity's Front-End Web Development Nanodegree Program, using React to create a single-page application of a Neighborhood Map. Requirements included creating a map with Google Maps and at least one third-party API, along with animated markers and a filtered query list. <br><br>
+This is a project I completed for Udacity's Front-End Web Development Nanodegree Program, using React to create a single-page application of a Neighborhood Map. Requirements included creating a map with Google Maps and at least one third-party API, along with animated markers and a filtered query list. <br>
 
 ## Technologies and Dependencies Used: 
 
@@ -18,9 +18,9 @@ https://github.com/facebook/create-react-app<br>
 
 ## To Run This App:
 
-clone or download this repository: https://github.com/jkianese/p7-react-map-final<br><br>
+clone or download this repository: https://github.com/jkianese/p7-react-map-final<br>
 
-Run $ npm install axios<br><br>
+Run $ npm install axios<br>
 
 Run $ npm start to run app at: localhost:3000<br>
 
