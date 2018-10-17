@@ -16,6 +16,10 @@ https://www.npmjs.com/package/axios<br>
 Create-React-App:<br>
 https://github.com/facebook/create-react-app<br>
 
+## Service Worker:
+
+This project must be run in production mode for Service Worker to Function
+
 ## To Run This App:
 
 clone or download this repository: https://github.com/jkianese/p7-react-map-final<br>
