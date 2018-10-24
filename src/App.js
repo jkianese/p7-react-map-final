@@ -10,6 +10,7 @@ class App extends Component {
         allMarkers: [],
         query: '',
         infowindow: [],
+        selectedVenue: []
   }  
 
   componentDidMount() {
@@ -22,7 +23,7 @@ class App extends Component {
     window.initMap = this.initMap
   }
 
-  // fetch venue data from foursquare API using Axios
+  // fetch venue data from Foursquare API using Axios
   getVenues = () => {
     const endPoint = "https://api.foursquare.com/v2/venues/explore?"
     const parameters = {
@@ -46,24 +47,15 @@ class App extends Component {
       });
   }
   
-  sidebarList = (marker, contentString) => {
-
-    this.state.infowindow.setContent(contentString);  
-    this.state.infowindow.open(this.state.map, marker);
-  
-    marker.setAnimation(window.google.maps.Animation.BOUNCE);
-    setTimeout(function() {
-      marker.setAnimation(null);
-    }, 2000);
-    
-  }
-  
   // render map using Google Maps JavaScript API
   initMap = () => {
     let google = window.google
+
+    // Attempt to center on mobile devices -- not going well 
+    // const bounds = new google.maps.LatLngBounds()
     
     // Create Map
-    const map = new google.maps.Map(document.getElementById('map') , {
+    const map = new google.maps.Map(document.getElementById('map'), {
       center: { lat: 40.448506, lng: -80.00250},
       zoom: 12
     });
@@ -89,8 +81,12 @@ class App extends Component {
         map: map,
         id: venueInfo.venue.id,
         title: venueInfo.venue.name,
-        animation: google.maps.Animation.DROP
+        animation: google.maps.Animation.DROP,
+    
       });
+      // Added to try to center on mobile -- not going well
+      // bounds.extend(marker.position); 
+      // map.fitBounds(bounds); 
 
       // clickable markers
       marker.addListener('click', () => {
@@ -115,35 +111,46 @@ class App extends Component {
     this.setState({ allMarkers });
   }
 
-  updateQuery = query => {
-    this.setState({ query });
-      if(query.trim() === ""){
-    this.state.allMarkers.forEach(marker => marker.setVisible(true)) 
-    return true;
-      } else {
-      
-      let myVenues = this.state.myVenues.filter(venue => {
-          return venue.venue.name.toLowerCase().indexOf(query.toLowerCase()) > -1
-      })
-      
-      myVenues
-        .forEach(item => this.state.allMarkers
-        .filter(marker => marker.id !== item.venue.name)
-        .map(falseMarker => falseMarker
-        .setVisible(false)))
-      myVenues
-        .forEach(item => this.state.allMarkers
-        .filter(marker => marker.id === item.venue.name) 
-        .map(trueMarker => trueMarker
-        .setVisible(true)))
-      }
-      
-  }; 
+  // Sidebar list of venues
+  sidebarList = (marker, contentString) => {
 
+    this.state.infowindow.setContent(contentString);  
+    this.state.infowindow.open(this.state.map, marker);
+  
+    marker.setAnimation(window.google.maps.Animation.BOUNCE);
+    setTimeout(function() {
+      marker.setAnimation(null);
+    }, 2000);
+    
+  }
+  
+ // Filter search
+ updateQuery = query => {
+  this.setState({ query });
+    if(query.trim() === "") {
+  this.state.allMarkers.forEach(marker => marker.setVisible(true)) 
+  return true;
+    } else {
+    let allVenues = this.state.myVenues.filter(venue => {
+        return venue.venue.name.toLowerCase().indexOf(query.toLowerCase()) > -1  
+    })
+    allVenues
+      .forEach(item => this.state.allMarkers
+      .filter(marker => marker.id !== item.venue.id)
+      .map(falseMarker => falseMarker
+      .setVisible(false)))
+    allVenues
+      .forEach(item => this.state.allMarkers
+      .filter(marker => marker.id === item.venue.id)
+      .map(trueMarker => trueMarker  
+      .setVisible(true)))
+  }
+}; 
+  
   render() {
     return (
-      <main className="container">
-        <div id="map" /> 
+      <main className="map-container">
+        <div id="map" role="application" aria-label="map"/> 
           <Locations 
             myVenues={this.state.myVenues}
             query={this.state.query}
