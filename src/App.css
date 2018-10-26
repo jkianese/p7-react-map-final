@@ -67,7 +67,7 @@ html, body {
 }
 
 @media screen and (max-width: 550px) {
-
+  
   .sidebar-boxes {
     display: block;
     top: 0!important;

@@ -3,16 +3,6 @@ import "./App.css";
 import Locations from "./components/Locations";
 import axios from "axios";
 
-/*
- 1) I've got it so that the markers filter correctly as input is entered, 
- however, for some reason when the list is filtered and I click a remaining 
- marker it defaults incorrectly to the first venue on my list. 2} when I click 
- on a venue from the sidebar the infowindow shows only the venue's name, I need to 
- get to same content to show as when I click on a marker. 3} I need to get the map 
- centered for responsiveness so that it centers correctly on mobile (as it is right 
-  now the sidebar covers the makers on a mobile viewport, which sucks). Thanks so much!!!
-*/
-
 class App extends Component {
   state = {
     myVenues: [],
@@ -64,9 +54,6 @@ class App extends Component {
   initMap = () => {
     let google = window.google;
 
-    // Attempt to center on mobile devices -- not going well
-    // const bounds = new google.maps.LatLngBounds()
-
     // Create Map
     const map = new google.maps.Map(document.getElementById("map"), {
       center: { lat: 40.448506, lng: -80.0025 },
@@ -101,9 +88,6 @@ class App extends Component {
         title: venueInfo.venue.name,
         animation: google.maps.Animation.DROP
       });
-      // Added to try to center on mobile -- not going well
-      // bounds.extend(marker.position);
-      // map.fitBounds(bounds);
 
       // clickable markers
       marker.addListener("click", () => {
@@ -148,7 +132,9 @@ class App extends Component {
 
   // Filter search
   updateQuery = query => {
-    this.state.infowindow.close(); // added this to ensure info window closes whenever search field is changed
+
+    // Close InfoWindow as search changes
+    this.state.infowindow.close();
 
     this.setState({ query });
     if (query.trim() === "") {
@@ -181,7 +167,7 @@ class App extends Component {
             query={this.state.query}
             allMarkers={this.state.allMarkers}
             updateQuery={this.updateQuery}
-            sidebarList={this.sidebarList} // removed info window as it's not used on Locations.js
+            sidebarList={this.sidebarList}
           />
         </div>
       </main>
