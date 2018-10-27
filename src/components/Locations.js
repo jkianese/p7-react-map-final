@@ -24,12 +24,13 @@ class Locations extends Component {
 
     return (
       <div className="sidebar">
-        <input 
+        <input
           type="button"
           hidden={false}
           value={this.state.sidebarClicked ? "Show Venues" : "Hide Venues"}
-          className="button"
+          className="button" 
           onClick={() => this.handleClick()} 
+          aria-label="togggle venues"
         />
         <div
           style={{ display: this.state.sidebarClicked ? "none" : "block"  }}
@@ -54,6 +55,7 @@ class Locations extends Component {
                 <li
                   tabIndex="0"
                   className="locations-names"
+                  aria-labelledby="locationNames"
                   key={idx}
                   onClick={() => this.onClickLocation(venue, venue.venue.name)}>
                   {" "}

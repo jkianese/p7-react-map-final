@@ -14,6 +14,12 @@ class App extends Component {
 
   componentDidMount() {
     this.getVenues();
+
+    // Error Handling on Failure
+    window.gm_authFailure = () => {
+      alert("Oops! Something went wrong, Google Maps API can not be loaded");
+    };
+
   }
 
   // get Google Maps API Key
