@@ -24,15 +24,15 @@ class Locations extends Component {
 
     return (
       <div className="sidebar">
-        {/* <input 
+        <input 
           type="button"
           hidden={false}
-          value={this.state.sidebarClicked ? "Show" : "Hide"}
+          value={this.state.sidebarClicked ? "Show Venues" : "Hide Venues"}
           className="button"
-        onClick={() => this.handleClick()} 
-        /> */}
+          onClick={() => this.handleClick()} 
+        />
         <div
-          // style={{ display: this.state.sidebarClicked ? "none" : "block"  }}
+          style={{ display: this.state.sidebarClicked ? "none" : "block"  }}
           className="sidebar-boxes">
           <input
             className="text-input"
