@@ -9,7 +9,6 @@ class App extends Component {
     allMarkers: [],
     query: "",
     infowindow: [],
-    selectedVenue: [],
     map: null
   };
 
@@ -31,7 +30,7 @@ class App extends Component {
       client_secret: "LUY5JVOKL3Y0W0FCHDLIJ4A1DXKJVHKBRDOR4CHCWSRG54TJ",
       query: "arts",
       near: "Pittsburgh, PA",
-      limit: 5,
+      limit: 30,
       v: "20181014"
     };
     // Run: npm install axios
@@ -56,8 +55,9 @@ class App extends Component {
 
     // Create Map
     const map = new google.maps.Map(document.getElementById("map"), {
-      center: { lat: 40.448506, lng: -80.0025 },
-      zoom: 12
+      center: { lat: 40.435761, lng: -79.968478 },
+      zoom: 12,
+      scrollwheel: true
     });
 
     // Create InfoWindow
@@ -119,7 +119,7 @@ class App extends Component {
     ${marker.state}<br>
     ${marker.postalCode}<br> 
     </center>`;
-    console.log(marker);
+  
     this.state.infowindow.close();
     this.state.infowindow.setContent(contentString);
     this.state.infowindow.open(this.state.map, marker);
@@ -159,7 +159,7 @@ class App extends Component {
 
   render() {
     return (
-      <main className="map-container">
+      <main className="app-container">
         <div id="map" role="application" aria-label="map" />
         <div>
           <Locations
