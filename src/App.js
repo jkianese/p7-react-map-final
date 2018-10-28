@@ -32,8 +32,8 @@ class App extends Component {
   getVenues = () => {
     const endPoint = "https://api.foursquare.com/v2/venues/explore?";
     const parameters = {
-      client_id: "F1BIU3KU3RZFBQKCLKJ2MX1AT2ZRZFYRUXTJUMFGA1YUS5ZF",
-      client_secret: "LUY5JVOKL3Y0W0FCHDLIJ4A1DXKJVHKBRDOR4CHCWSRG54TJ",
+      client_id: "",
+      client_secret: "",
       query: "arts",
       near: "Pittsburgh, PA",
       limit: 30,
@@ -187,7 +187,7 @@ function scriptSource() {
   let index = window.document.getElementsByTagName("script")[0];
   let script = window.document.createElement("script");
   script.src =
-    "https://maps.googleapis.com/maps/api/js?key=AIzaSyBj5AzHYC1kUPRnvaT6G6zsAONHSpKmoqQ&callback=initMap";
+    "https://maps.googleapis.com/maps/api/js?key=&callback=initMap";
   script.async = true;
   script.defer = true;
   script.onerror = function() {
